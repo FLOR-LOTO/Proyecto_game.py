@@ -32,3 +32,19 @@ welcome = lambda: print('Bienvenido al juego: "EL AHORCADO"\n'
       '5. Si pierdes todas las oportunidades, tendrás que empezar de nuevo.\n'
       '\n'
       '❤❤❤❤❤❤¡¡¡Mucha suerte!!!❤❤❤❤❤❤\n')
+
+# Crear una nueva palabra donde los caracteres no presentes en 'character' son reemplazados por '-'
+def word_incognit(word, visible_character):
+    """
+    word: La palabra que queremos transformar.
+    visible_character: Caracteres(lista) que deben ser visibles en la nueva palabra, mientras que los otros caracteres serán reemplazados por guiones (-).
+    """
+    new_word = []
+    
+    for char in word:
+     if char in visible_character:
+        new_word.append(char)
+     else:
+        new_word.append('-')
+        
+    new_word = ''.join(new_word) #convertimos el resultado de elementos de new_word a una sola string ''.join
