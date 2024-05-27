@@ -16,33 +16,36 @@ perdió.
 """
 import random
 
-words = ['alambre', 'martillo', 'armario', 'elefante', 'camisa', 'empaquetar', 'alcohol']
+words = ['alambre', 'martillo', 'armario', 'elefante', 'camisa', 'empaquetar', 'alcohol', 'amor', 'tigre', 'salamandra']
 
 #Bienvenida
-welcome = lambda:    print('Bienvenido al juego: "EL AHORCADO"\n'
+welcome = lambda:print('Bienvenido al juego: "EL AHORCADO"\n'
       '\n'
-      'Objetivo del juego:\n'
+      'OBJETIVO DEL JUEGO:\n'
       'Debes adivinar la palabra oculta.\n'
       '\n'
-      'Cómo jugar:\n'
+      'CÓMO JUGAR:\n'
       '1. Tienes 5 oportunidades para adivinar la palabra.\n'
       '2. Ingresa una letra cada vez.\n'
       '3. Si la letra está en la palabra, se mostrará su posición.\n'
       '4. Si la letra no está, perderás una oportunidad.\n'
       '5. Si pierdes todas las oportunidades, tendrás que empezar de nuevo.\n'
       '\n'
-      '❤❤❤❤❤❤¡¡¡Mucha suerte!!!❤❤❤❤❤❤\n')
+      '🍀¡Buena suerte!🍀\n')
 
 #logica para restar vidas
 def lifes(count, acert):
     if not acert:
         count -= 1
-        print(f'Haz perdido una oportunidad, tienes {count} vidas restantes')
+        print(f'Haz perdido una oportunidad 😟, tienes {count} vidas restantes')
+        print('\n')
     else:
-        print('Felicitaciones, haz acertado la letra, sigue así')
+        print('Felicitaciones, haz acertado la letra, sigue así 🤩')
+        print('\n')
         
     if count == 0:
-        print('Ya no tienes vidas. Vuelve a comenzar el juego')
+        print('Ya no tienes vidas 😭')
+        print('\n')
         
     return count
 
@@ -61,10 +64,12 @@ def word_incognit(word, visible_character):
         new_word.append('-')
         
     new_word = ''.join(new_word) #convertimos el resultado de elementos de new_word a una sola string ''.join
+    
+    return new_word.upper()
 
 
 def start_game():
-    random_word = random.choice(words) #random_word guarda la palabra escondida
+    random_word = random.choice(words).upper() #random_word guarda la palabra escondida
     correct_letters = set()            #almacena las letras que el jugador ha adivinado correctamente, un set()evita duplicados
     incorrect_letters = []             #guarda las letras erroneas
     lives = 5                          #vidas iniciales
@@ -72,7 +77,67 @@ def start_game():
     
     welcome()
     
-    print(f'LA PALABRA CONTIENE {word_length} LETRAS')
+    print(f'LA PALABRA CONTIENE {word_length} LETRAS' '\n')
     
+    while lives > 0: 
+        """
+        bucle que ejecutará la dinamica, si tengo al menos una vida entra nuevamente en el bucle
+        muestra la palabra oculta con las letras acertadas al momento
+        pide el ingreso del caracter y lo guardo en una variable
+        """            
+        print('Decifrado hasta el momento: ' + word_incognit(random_word, correct_letters))
+        print('-----------------------------------------------')
+        char_params = input('Elije una letra: ')
+        print('\n')
+        char_param = char_params.upper()
+        
+        if not isinstance(char_param, str) or len(char_param) != 1 or not char_param.isalpha(): 
+            """
+            si no es un string o es un número o caracter especial da error pero contínua con el bucle
+            continue permite Volver al inicio del bucle while, pidiendo una nueva letra hasta que sea un caracter válido
+            """
+            print("ERROR ❌: El dato debe ser una letra.")
+            print('\n')
+            continue
     
+        if char_param in correct_letters or char_param in incorrect_letters:
+            """
+            verifico si ya se uso la letra tanto en el conjunto de acertadas como de erroneas
+            continue permite Volver al inicio del bucle while, pidiendo una nueva letra hasta que sea un caracter válido
+            """
+            print(f'Ya has intentado con la letra "{char_param}". Intenta con otra🤞')
+            print('\n')
+            continue
+        
+        if char_param in random_word:
+            """
+            verifico si la letra esta en la palabra y la sumo a las letras adivinadas add por que es un set
+            verifico si todas las letras fueron adivinadas, si es así finalizo el bucle (break)
+            Si la letra no esta en la palabra, la sumo a la lista de incorrectas append por que es una list y resto una vida
+            si las vidas son igual a cero, termino el bucle (break)
+            """
+            correct_letters.add(char_param)
+            print(f'¡Bien hecho 👍! La letra "{char_param}" está en la palabra.')
+            print('\n')
+            
+            if set(random_word) == correct_letters:
+                print(f'¡Felicidades 🥳! Has descubierto la palabra: {random_word}')
+                print('\n')      
+                break
+        else:
+            incorrect_letters.append(char_param)
+            print(f'LETRAS ERRÓNEAS HASTA EL MOMENTO: {incorrect_letters}')
+            print('\n')
+            lives = lifes(lives, False)
+        
+        if lives == 0:
+            print(f'La palabra oculta era: {random_word}')
+            print('\n')
+            break
+    """
+    opción de comenzar un nuevo juego con recursión
+    """
+    if input('¿QUIERES INTENTAR DE NUEVO? (s/n): ').lower() == 's':
+        start_game()
+
 start_game()
