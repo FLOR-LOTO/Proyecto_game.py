@@ -19,7 +19,7 @@ import random
 words = ['alambre', 'martillo', 'armario', 'elefante', 'camisa', 'empaquetar', 'alcohol']
 
 #Bienvenida
-welcome = lambda: print('Bienvenido al juego: "EL AHORCADO"\n'
+welcome = lambda:    print('Bienvenido al juego: "EL AHORCADO"\n'
       '\n'
       'Objetivo del juego:\n'
       'Debes adivinar la palabra oculta.\n'
@@ -33,7 +33,20 @@ welcome = lambda: print('Bienvenido al juego: "EL AHORCADO"\n'
       '\n'
       '❤❤❤❤❤❤¡¡¡Mucha suerte!!!❤❤❤❤❤❤\n')
 
-# Crear una nueva palabra donde los caracteres no presentes en 'character' son reemplazados por '-'
+#logica para restar vidas
+def lifes(count, acert):
+    if not acert:
+        count -= 1
+        print(f'Haz perdido una oportunidad, tienes {count} vidas restantes')
+    else:
+        print('Felicitaciones, haz acertado la letra, sigue así')
+        
+    if count == 0:
+        print('Ya no tienes vidas. Vuelve a comenzar el juego')
+        
+    return count
+
+# Crear una nueva palabra donde los caracteres no presentes en la palabra son reemplazados por '-'
 def word_incognit(word, visible_character):
     """
     word: La palabra que queremos transformar.
@@ -48,3 +61,18 @@ def word_incognit(word, visible_character):
         new_word.append('-')
         
     new_word = ''.join(new_word) #convertimos el resultado de elementos de new_word a una sola string ''.join
+
+
+def start_game():
+    random_word = random.choice(words) #random_word guarda la palabra escondida
+    correct_letters = set()            #almacena las letras que el jugador ha adivinado correctamente, un set()evita duplicados
+    incorrect_letters = []             #guarda las letras erroneas
+    lives = 5                          #vidas iniciales
+    word_length = len(random_word)     #cantidad de letras
+    
+    welcome()
+    
+    print(f'LA PALABRA CONTIENE {word_length} LETRAS')
+    
+    
+start_game()
