@@ -1,19 +1,3 @@
-"""
-El objetivo consiste en desarrollar el juego interactivo “adivina la palabra”.
-El funcionamiento esperado es el siguiente:
-Al ejecutar el programa se mostrará por pantalla una palabra oculta usando tantos guiones
-como letras contiene la palabra a adivinar(la palabra a adivinar será elegida por el
-programa usando el módulo de Python random), la cantidad de vidas con las que cuenta el
-jugador y las cantidad de letras incorrectas que va ingresando.
-Cuando el jugador ingresa una letra es necesario que se valide el dato( que sea una letra).
-Luego de validar la letra ingresada se corrobora si la letra ingresada pertenece a alguna de
-las letras de la palabra a adivinar.
-Cada vez que el jugador ingrese una letra que NO pertenece a la palabra a adivinar se
-restará una vida.
-El juego finaliza cuando el jugador queda sin vidas o cuando adivina todas las letras de la
-palabra. Para todos los casos se debe mostrar un mensaje indicando si ganó la partida o si
-perdió. 
-"""
 import random
 
 words = ['alambre', 'martillo', 'armario', 'elefante', 'camisa', 'empaquetar', 'alcohol', 'amor', 'tigre', 'salamandra']
@@ -70,7 +54,7 @@ def word_incognit(word, visible_character):
 
 def start_game():
     random_word = random.choice(words).upper() #random_word guarda la palabra escondida
-    correct_letters = set()            #almacena las letras que el jugador ha adivinado correctamente, un set()evita duplicados
+    correct_letters = set()         #almacena las letras que el jugador ha adivinado correctamente, un set()evita duplicados
     incorrect_letters = []             #guarda las letras erroneas
     lives = 5                          #vidas iniciales
     word_length = len(random_word)     #cantidad de letras
@@ -86,7 +70,7 @@ def start_game():
         pide el ingreso del caracter y lo guardo en una variable
         """            
         print('Decifrado hasta el momento: ' + word_incognit(random_word, correct_letters))
-        print('-----------------------------------------------')
+        print('.......................................................................')
         char_params = input('Elije una letra: ')
         print('\n')
         char_param = char_params.upper()
